@@ -1,50 +1,145 @@
-# Welcome to your Expo app 👋
+# Installation and Setup
 
-This is an [Expo](https://expo.dev) project created with [`create-expo-app`](https://www.npmjs.com/package/create-expo-app).
+## Pre-requisites
 
-## Get started
+[React Native setup documentation](https://reactnative.dev/docs/set-up-your-environment).
 
-1. Install dependencies
+- Install Xcode
+- Install Xcode Command Line Tools
+- Install Homebrew
+- Install Mise
+- Install Node via Mise
+- Install Watchman via Homebrew
+- Install a Java Development Kit (JDK), Android Studio, the Android SDK: follow [the multistep directions](https://reactnative.dev/docs/set-up-your-environment?platform=android)
 
-   ```bash
-   npm install
-   ```
+## Setting up the first time
 
-2. Start the app
+Install the Expo CLI Globally
 
-   ```bash
-   npx expo start
-   ```
+```shell
+# sh
+npm install -g @expo/cli
+```
 
-In the output, you'll find options to open the app in a
+Create the app
 
-- [development build](https://docs.expo.dev/develop/development-builds/introduction/)
-- [Android emulator](https://docs.expo.dev/workflow/android-studio-emulator/)
-- [iOS simulator](https://docs.expo.dev/workflow/ios-simulator/)
-- [Expo Go](https://expo.dev/go), a limited sandbox for trying out app development with Expo
+```shell
+# sh
+npx create-expo-app CribbageBoardApp && cd CribbageBoardApp
+```
 
-You can start developing by editing the files inside the **app** directory. This project uses [file-based routing](https://docs.expo.dev/router/introduction).
+Reset the project to move the starter code to an app demo directory (per the Readme file)
 
-## Get a fresh project
-
-When you're ready, run:
-
-```bash
+```shell
+# sh
 npm run reset-project
 ```
 
-This command will move the starter code to the **app-example** directory and create a blank **app** directory where you can start developing.
+Create a mise.toml file
 
-## Learn more
+```shell
+# sh
+mise use node@lts
+```
 
-To learn more about developing your project with Expo, look at the following resources:
+Install the react-native-svg package
 
-- [Expo documentation](https://docs.expo.dev/): Learn fundamentals, or go into advanced topics with our [guides](https://docs.expo.dev/guides).
-- [Learn Expo tutorial](https://docs.expo.dev/tutorial/introduction/): Follow a step-by-step tutorial where you'll create a project that runs on Android, iOS, and the web.
+```shell
+# sh
+npm install react-native-svg
+```
 
-## Join the community
+Reset the project
 
-Join our community of developers creating universal apps.
+```shell
+# sh
+npm run reset-project
+```
 
-- [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
-- [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
+Edit the `app/(tabs)/index.ts` file.
+
+Make a `components` directory at the same level as `app`.
+
+Add the CribbageBoard component to that directory as `CribbageBoard.tsx`.
+
+Edit the `mise.toml` file to pin Node and npm and add tasks (run `mise tasks` to see a list of tasks or `mise run start` to run the Expo Go start task for example).
+
+Configure prettier, add as a dev dependency:
+
+```shell
+# sh
+npm install --save-dev prettier eslint-config-prettier eslint-plugin-prettier @typescript-eslint/eslint-plugin @typescript-eslint/parser @eslint/eslintrc
+```
+
+Create a `.prettierrc` file in the project root:
+
+```json
+{
+  "semi": true,
+  "trailingComma": "es5",
+  "singleQuote": true,
+  "printWidth": 100,
+  "tabWidth": 2,
+  "useTabs": false,
+  "bracketSpacing": false,
+  "arrowParens": "avoid"
+}
+```
+
+Create a `.prettierignore` file to exclude certain files:
+
+```shell
+node_modules
+.expo
+.expo-shared
+*.log
+.DS_Store
+*.tgz
+*.tar.gz
+.cache
+dist
+build
+```
+
+Update the `eslint.config.js` file, adding to the `defineConfig` array arg:
+
+```json
+{
+files: ['**/*.{js,jsx,ts,tsx}'],
+plugins: {
+  prettier: require('eslint-plugin-prettier'),
+},
+rules: {
+  // Prettier integration
+  'prettier/prettier': 'error',
+  
+  // Unused imports - TypeScript projects
+  '@typescript-eslint/no-unused-vars': ['error', { 
+    argsIgnorePattern: '^_',
+    varsIgnorePattern: '^_',
+    ignoreRestSiblings: true 
+  }],
+  
+  // For JavaScript files
+  'no-unused-vars': ['error', {
+    argsIgnorePattern: '^_',
+    varsIgnorePattern: '^_',
+    ignoreRestSiblings: true
+  }],
+},
+},
+// This should come last to disable conflicting rules
+require('eslint-config-prettier'),
+```
+
+Update the scripts section of the `package.json` to include:
+
+```json
+"lint:fix": "eslint . --fix",
+"format": "prettier --write .",
+"format:check": "prettier --check ."
+```
+
+### Configure PHPStorm/PyCharm
+
+Open Settings, navigate Language & Frameworks -> JavaScript -> Code Quality Tools -> ESLint. Automatic ESLint configuration should be selected by default. Tick the option to "Run eslint --fix on save."

@@ -1,0 +1,31 @@
+[tools]
+# Use the current LTS version of Node.js (after running `mise use node@lts`, run `node --version` to find the specific version)
+node = "22.17.0"
+# Pin npm version (run `npm --version` to find the specific version)
+npm = "10.9.2"
+
+[env]
+# Expo CLI environment variables
+EXPO_USE_DEV_SERVER = "true"
+# Prevent auto-opening browser on expo start
+EXPO_NO_BROWSER = "true"
+
+[tasks.start]
+run = "npx expo start"
+description = "Start Expo development server"
+
+[tasks.ios]
+run = "npx expo run:ios"
+description = "Run on iOS simulator"
+
+[tasks.android]
+run = "npx expo run:android"
+description = "Run on Android emulator"
+
+[tasks.test]
+run = "npm test"
+description = "Run tests"
+
+[tasks.build-ios]
+run = "npx expo build:ios"
+description = "Build for iOS"
