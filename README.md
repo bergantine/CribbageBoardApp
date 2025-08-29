@@ -103,7 +103,7 @@ build
 
 Update the `eslint.config.js` file, adding to the `defineConfig` array arg:
 
-```json
+```
 {
 files: ['**/*.{js,jsx,ts,tsx}'],
 plugins: {
@@ -134,7 +134,7 @@ require('eslint-config-prettier'),
 
 Update the scripts section of the `package.json` to include:
 
-```json
+```
 "lint:fix": "eslint . --fix",
 "format": "prettier --write .",
 "format:check": "prettier --check ."
