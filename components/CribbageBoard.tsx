@@ -14,9 +14,9 @@ const CribbageBoard = ({player1Points, player2Points, width = 52}: CribbageBoard
 
   const maxPoints = 121;
 
-  // Calculate progress as percentage (0-100)
-  const player1Progress = (player1Points / maxPoints) * 100;
-  const player2Progress = (player2Points / maxPoints) * 100;
+  // Calculate progress as decimal (0-1) for more precision
+  const player1Progress = Math.max(0, Math.min(1, player1Points / maxPoints));
+  const player2Progress = Math.max(0, Math.min(1, player2Points / maxPoints));
 
   // Your original SVG paths
   const innerTrackPath =
@@ -24,6 +24,11 @@ const CribbageBoard = ({player1Points, player2Points, width = 52}: CribbageBoard
 
   const outerTrackPath =
     'M1 381V26C1 12.1929 12.1929 1 26 1V1C39.8071 1 51 12.1565 51 25.9637C51 132.082 51 313.33 51 366.149C51 374.433 44.2843 381 36 381V381C27.7157 381 21 374.37 21 366.085C21 312.132 21 125.111 21 26.5';
+
+  // Use a larger, more precise dasharray
+  const player1ScaleFactor = 70.2 / 121;
+  const player2ScaleFactor = 66.4 / 121;
+  const dashLength = 2000;
 
   return (
     <View style={styles.container}>
@@ -40,24 +45,28 @@ const CribbageBoard = ({player1Points, player2Points, width = 52}: CribbageBoard
           <Path d={outerTrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
 
           {/* Progress tracks (colored) */}
-          <Path
-            d={innerTrackPath}
-            stroke="#0073E6"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="1000" // Large number to cover entire path
-            strokeDashoffset={1000 - player2Progress * 10} // Animate based on progress
-          />
-          <Path
-            d={outerTrackPath}
-            stroke="#89CE00"
-            strokeWidth="2"
-            fill="none"
-            strokeLinecap="round"
-            strokeDasharray="1000"
-            strokeDashoffset={1000 - player1Progress * 10}
-          />
+          {player2Progress > 0 && (
+            <Path
+              d={innerTrackPath}
+              stroke="#0073E6"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray={`${dashLength * player2Progress * player2ScaleFactor} ${dashLength}`}
+              strokeDashoffset="0"
+            />
+          )}
+          {player1Progress > 0 && (
+            <Path
+              d={outerTrackPath}
+              stroke="#89CE00"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray={`${dashLength * player1Progress * player1ScaleFactor} ${dashLength}`}
+              strokeDashoffset="0"
+            />
+          )}
         </Svg>
       </View>
     </View>
@@ -82,6 +91,3 @@ const styles = StyleSheet.create({
 });
 
 export default CribbageBoard;
-
-// Usage example:
-// <CribbageBoard player1Points={95} player2Points={35} width={20} />
