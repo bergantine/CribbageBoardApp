@@ -34,9 +34,17 @@ export default function HomeScreen() {
       <Stack.Screen options={{headerShown: false}} />
 
       <View className="flex-1 bg-gray-100 items-center justify-center pb-8 pt-16 px-8">
-        <Button player={1} pressFunction={() => addPointsToBoard({player: 1, points: 1})} />
+        <Button
+          player={1}
+          pressFunction={() => addPointsToBoard({player: 1, points: 1})}
+          longPressFunction={() => addPointsToBoard({player: 1, points: 5})}
+        />
         <CribbageBoard player1Points={player1Points} player2Points={player2Points} width={30} />
-        <Button player={2} pressFunction={() => addPointsToBoard({player: 2, points: 1})} />
+        <Button
+          player={2}
+          pressFunction={() => addPointsToBoard({player: 2, points: 1})}
+          longPressFunction={() => addPointsToBoard({player: 2, points: 5})}
+        />
       </View>
     </>
   );

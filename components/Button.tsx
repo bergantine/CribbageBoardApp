@@ -4,9 +4,10 @@ import {cn} from '@/utils';
 interface ButtonProps {
   player: number;
   pressFunction: () => void;
+  longPressFunction: () => void;
 }
 
-export default function Button({player, pressFunction}: ButtonProps) {
+export default function Button({player, pressFunction, longPressFunction}: ButtonProps) {
   return (
     <TouchableOpacity
       className={cn(
@@ -15,6 +16,9 @@ export default function Button({player, pressFunction}: ButtonProps) {
       )}
       onPress={() => {
         pressFunction();
+      }}
+      onLongPress={() => {
+        longPressFunction();
       }}
     >
       <Text className="text-white text-base font-bold text-center">Player {player}</Text>
