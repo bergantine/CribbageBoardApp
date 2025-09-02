@@ -14,9 +14,17 @@ EXPO_NO_BROWSER = "true"
 run = "npx expo start"
 description = "Start Expo development server"
 
+[tasks.build-ios]
+run = "npx expo build:ios"
+description = "Build for iOS"
+
 [tasks.ios]
 run = "npx expo run:ios"
 description = "Run on iOS simulator"
+
+[tasks.iphone]
+run = "npx expo run:ios --device"
+description = "Run on iPhone via USB connection"
 
 [tasks.android]
 run = "npx expo run:android"
@@ -26,6 +34,10 @@ description = "Run on Android emulator"
 run = "npm test"
 description = "Run tests"
 
-[tasks.build-ios]
-run = "npx expo build:ios"
-description = "Build for iOS"
+[tasks.lint-fix]
+run = "eslint . --fix"
+description = "Fix code quality issues and format with prettier"
+
+[tasks.prettier]
+run = "prettier --write"
+description = "Format code with prettier"
