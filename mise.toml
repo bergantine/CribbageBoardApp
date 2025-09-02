@@ -35,9 +35,9 @@ run = "npm test"
 description = "Run tests"
 
 [tasks.lint-fix]
-run = "eslint . --fix"
+run = "npm run lint:fix"
 description = "Fix code quality issues and format with prettier"
 
 [tasks.prettier]
-run = "prettier --write"
+run = "npm run format"
 description = "Format code with prettier"

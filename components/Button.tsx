@@ -1,5 +1,5 @@
-import {Text, TouchableOpacity} from 'react-native';
-import {cn} from '@/utils';
+import { Text, TouchableOpacity } from 'react-native';
+import { cn } from '@/utils';
 
 interface ButtonProps {
   player: number;
@@ -7,21 +7,20 @@ interface ButtonProps {
   longPressFunction: () => void;
 }
 
-export default function Button({player, pressFunction, longPressFunction}: ButtonProps) {
+export default function Button({ player, pressFunction, longPressFunction }: ButtonProps) {
   return (
     <TouchableOpacity
       className={cn(
-        'px-5 py-3 rounded-lg m-2',
-        player === 1 ? 'bg-green-500 rotate-180 self-start' : 'bg-blue-500 self-end'
+        'm-2 rounded-lg px-5 py-3',
+        player === 1 ? 'rotate-180 self-start bg-green-500' : 'self-end bg-blue-500'
       )}
       onPress={() => {
         pressFunction();
       }}
       onLongPress={() => {
         longPressFunction();
-      }}
-    >
-      <Text className="text-white text-base font-bold text-center">Player {player}</Text>
+      }}>
+      <Text className="text-center text-base font-bold text-white">Player {player}</Text>
     </TouchableOpacity>
   );
 }

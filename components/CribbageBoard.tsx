@@ -1,6 +1,6 @@
 import React from 'react';
-import {View, StyleSheet} from 'react-native';
-import Svg, {Path} from 'react-native-svg';
+import { View, StyleSheet } from 'react-native';
+import Svg, { Path } from 'react-native-svg';
 
 interface CribbageBoardProps {
   player1Points: number;
@@ -8,7 +8,7 @@ interface CribbageBoardProps {
   width?: number;
 }
 
-const CribbageBoard = ({player1Points, player2Points, width = 52}: CribbageBoardProps) => {
+const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoardProps) => {
   const aspectRatio = 382 / 52; // height/width
   const height = width * aspectRatio;
 
@@ -38,8 +38,7 @@ const CribbageBoard = ({player1Points, player2Points, width = 52}: CribbageBoard
           height={height}
           viewBox="0 0 52 382"
           preserveAspectRatio="xMidYMid meet"
-          style={styles.svg}
-        >
+          style={styles.svg}>
           {/* Background tracks (dark grey) */}
           <Path d={innerTrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
           <Path d={outerTrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
@@ -82,11 +81,11 @@ const styles = StyleSheet.create({
   boardContainer: {
     alignItems: 'center',
     marginBottom: 20,
-    transform: [{rotate: '15deg'}],
+    transform: [{ rotate: '15deg' }],
   },
   svg: {
     // Scale up for better visibility
-    transform: [{scale: 3}],
+    transform: [{ scale: 3 }],
   },
 });
 
