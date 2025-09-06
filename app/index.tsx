@@ -4,10 +4,13 @@ import { Stack } from 'expo-router';
 import AddButton from '@/components/AddButton';
 import { useState } from 'react';
 import { useIOSShakeToUndo } from '@/utils';
+import TurnScore from '@/components/TurnScore';
 
 export default function HomeScreen() {
   const [player1Points, setPlayer1Points] = useState(0);
   const [player2Points, setPlayer2Points] = useState(0);
+  const [player1TurnPoints, setPlayer1TurnPoints] = useState(0);
+  const [player2TurnPoints, setPlayer2TurnPoints] = useState(0);
   const [lastPointsAdded, setLastPointsAdded] = useState(0);
   const [lastPointsAddedForPlayer, setLastPointsAddedForPlayer] = useState(0);
 
@@ -47,6 +50,14 @@ export default function HomeScreen() {
     console.log(`Player ${player} added ${points} points`);
 
     if (player === 1) {
+      if (lastPointsAddedForPlayer === 1) {
+        const newPoints = player1TurnPoints + points;
+        setPlayer1TurnPoints(newPoints);
+        console.log(`Player 1 turn points ${newPoints}`);
+      } else {
+        setPlayer1TurnPoints(1);
+      }
+
       const newPoints = player1Points + points;
       setPlayer1Points(newPoints);
       setLastPointsAdded(points);
@@ -56,6 +67,14 @@ export default function HomeScreen() {
     }
 
     if (player === 2) {
+      if (lastPointsAddedForPlayer === 2) {
+        const newPoints = player2TurnPoints + points;
+        setPlayer2TurnPoints(newPoints);
+        console.log(`Player 2 turn points ${newPoints}`);
+      } else {
+        setPlayer2TurnPoints(1);
+      }
+
       const newPoints = player2Points + points;
       setPlayer2Points(newPoints);
       setLastPointsAdded(points);
@@ -87,13 +106,15 @@ export default function HomeScreen() {
     <>
       <Stack.Screen options={{ headerShown: false }} />
 
-      <View className="flex-1 items-center justify-center bg-gray-100 px-8 pb-8 pt-16">
+      <View className="flex-1 items-center justify-center bg-gray-100 px-8 pb-8 pt-16 relative">
         <AddButton
           player={1}
           pressFunction={() => addPointsToBoard({ player: 1, points: 1 })}
           longPressFunction={() => addPointsToBoard({ player: 1, points: 5 })}
         />
+        {lastPointsAddedForPlayer === 1 && <TurnScore player={1} points={player1TurnPoints} />}
         <CribbageBoard player1Points={player1Points} player2Points={player2Points} width={30} />
+        {lastPointsAddedForPlayer === 2 && <TurnScore player={2} points={player2TurnPoints} />}
         <AddButton
           player={2}
           pressFunction={() => addPointsToBoard({ player: 2, points: 1 })}
