@@ -7,7 +7,7 @@ interface ButtonProps {
   longPressFunction: () => void;
 }
 
-export default function Button({ player, pressFunction, longPressFunction }: ButtonProps) {
+export default function AddButton({ player, pressFunction, longPressFunction }: ButtonProps) {
   return (
     <TouchableOpacity
       className={cn(
