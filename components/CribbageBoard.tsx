@@ -36,13 +36,23 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
     if (!isPlayer1 || points < firstCurvePointsAtStart) {
       return points * player2Scale;
     } else if (points <= firstCurvePointsAtEnd) {
-      return points * player1FirstCurveScale; // need to scale this so 40 is 9.13 + 1/4 of the difference between 9.85 and 9.13, 41 is 2/4 etc.
+      if (points === 40) {
+        return points * (9.13 + 0.18);
+      } else if (points === 41) {
+        return points * (9.13 + 0.18 + 0.18);
+      } else if (points === 42) {
+        return points * (9.13 + 0.18 + 0.18 + 0.18);
+      }
+      return points * player1FirstCurveScale;
     } else if (points <= secondCurvePointsAtStart) {
       return (
         (points - firstCurvePointsAtEnd) * player2Scale +
         firstCurvePointsAtEnd * player1FirstCurveScale
       );
     } else if (points <= secondCurvePointsAtEnd) {
+      if (points === 82) {
+        return points * 9.73;
+      }
       return points * player1SecondCurveScale;
     } else {
       return (
