@@ -25,6 +25,10 @@ export default function HomeScreen() {
       setLastPointsAdded(points);
       setLastPointsAddedForPlayer(1);
       console.log(`Player 1 points ${newPoints}`);
+
+      if (newPoints > 120) {
+        console.log('Player 1 won!');
+      }
     }
 
     if (player === 2) {
@@ -33,6 +37,10 @@ export default function HomeScreen() {
       setLastPointsAdded(points);
       setLastPointsAddedForPlayer(2);
       console.log(`Player 2 points ${newPoints}`);
+
+      if (newPoints > 120) {
+        console.log('Player 2 won!');
+      }
     }
   };
 

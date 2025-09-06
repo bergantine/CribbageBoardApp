@@ -12,12 +12,6 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
   const aspectRatio = 382 / 52; // height/width
   const height = width * aspectRatio;
 
-  const maxPoints = 121;
-
-  // Calculate progress as decimal (0-1) for more precision
-  const player1Progress = Math.max(0, Math.min(1, player1Points / maxPoints));
-  const player2Progress = Math.max(0, Math.min(1, player2Points / maxPoints));
-
   // outside track
   const player1TrackPath =
     'M1 381V26C1 12.1929 12.1929 1 26 1V1C39.8071 1 51 12.1565 51 25.9637C51 132.082 51 313.33 51 366.149C51 374.433 44.2843 381 36 381V381C27.7157 381 21 374.37 21 366.085C21 312.132 21 125.111 21 26.5';
@@ -25,9 +19,42 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
   const player2TrackPath =
     'M11 381V26C11 17.7157 17.7157 11 26 11V11C34.2843 11 41 17.6297 41 25.914C41 131.362 41 332.447 41 366.151C41 368.912 38.7614 371 36 371V371C33.2386 371 31 368.883 31 366.122C31 331.91 31 126.43 31 27';
 
-  const player1ScaleFactor = 70.1 / 120;
-  const player2ScaleFactor = 66.3 / 120;
-  const dashLength = 2000;
+  // Original scale factors (these complete the paths at 120 points)
+  const dashLength = 1440;
+  const player2Scale = 9.13;
+  const player1FirstCurveScale = 9.85;
+  const firstCurvePointsAtStart = 40;
+  const firstCurvePointsAtEnd = 44;
+  const player1SecondCurveScale = 9.89;
+  const secondCurvePointsAtStart = 81;
+  const secondCurvePointsAtEnd = 83;
+
+  // Calculate the adjusted progress for each player
+  const calculateProgress = (points: number, isPlayer1: boolean): number => {
+    if (points <= 0) return 0;
+
+    if (!isPlayer1 || points < firstCurvePointsAtStart) {
+      return points * player2Scale;
+    } else if (points <= firstCurvePointsAtEnd) {
+      return points * player1FirstCurveScale; // need to scale this so 40 is 9.13 + 1/4 of the difference between 9.85 and 9.13, 41 is 2/4 etc.
+    } else if (points <= secondCurvePointsAtStart) {
+      return (
+        (points - firstCurvePointsAtEnd) * player2Scale +
+        firstCurvePointsAtEnd * player1FirstCurveScale
+      );
+    } else if (points <= secondCurvePointsAtEnd) {
+      return points * player1SecondCurveScale;
+    } else {
+      return (
+        (points - secondCurvePointsAtEnd) * player2Scale +
+        secondCurvePointsAtEnd * player1SecondCurveScale
+      );
+    }
+  };
+
+  // Calculate progress for each player
+  const player1Progress = calculateProgress(player1Points, true);
+  const player2Progress = calculateProgress(player2Points, false);
 
   return (
     <View style={styles.container}>
@@ -50,7 +77,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray={`${dashLength * player1Progress * player1ScaleFactor} ${dashLength}`}
+              strokeDasharray={`${player1Progress} ${dashLength}`}
               strokeDashoffset="0"
             />
           )}
@@ -61,7 +88,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
-              strokeDasharray={`${dashLength * player2Progress * player2ScaleFactor} ${dashLength}`}
+              strokeDasharray={`${player2Progress} ${dashLength}`}
               strokeDashoffset="0"
             />
           )}
