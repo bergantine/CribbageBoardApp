@@ -23,7 +23,19 @@ export default function HomeScreen() {
       } else {
         console.log(`Player ${winner} won!`);
       }
+
+      setTimeout(() => {
+        resetGame();
+      }, 5000);
     }
+  };
+
+  const resetGame = () => {
+    setPlayer1Points(0);
+    setPlayer2Points(0);
+    setLastPointsAdded(0);
+    setLastPointsAddedForPlayer(0);
+    console.log('Game reset');
   };
 
   interface AddPointsToBoardProps {
