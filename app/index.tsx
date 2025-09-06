@@ -11,6 +11,21 @@ export default function HomeScreen() {
   const [lastPointsAdded, setLastPointsAdded] = useState(0);
   const [lastPointsAddedForPlayer, setLastPointsAddedForPlayer] = useState(0);
 
+  const checkIfWon = (player: number, newPoints: number) => {
+    if (newPoints > 120) {
+      const otherPlayerPoints = player === 1 ? player2Points : player1Points;
+      const winner = player === 1 ? 'Green' : 'Blue';
+
+      if (otherPlayerPoints <= 60) {
+        console.log('Double skunk!');
+      } else if (otherPlayerPoints <= 90) {
+        console.log('Skunk!');
+      } else {
+        console.log(`Player ${winner} won!`);
+      }
+    }
+  };
+
   interface AddPointsToBoardProps {
     player: number;
     points: number;
@@ -25,10 +40,7 @@ export default function HomeScreen() {
       setLastPointsAdded(points);
       setLastPointsAddedForPlayer(1);
       console.log(`Player 1 points ${newPoints}`);
-
-      if (newPoints > 120) {
-        console.log('Player 1 won!');
-      }
+      checkIfWon(player, newPoints);
     }
 
     if (player === 2) {
@@ -37,10 +49,7 @@ export default function HomeScreen() {
       setLastPointsAdded(points);
       setLastPointsAddedForPlayer(2);
       console.log(`Player 2 points ${newPoints}`);
-
-      if (newPoints > 120) {
-        console.log('Player 2 won!');
-      }
+      checkIfWon(player, newPoints);
     }
   };
 
