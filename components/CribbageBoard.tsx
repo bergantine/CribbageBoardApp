@@ -1,6 +1,7 @@
 import React from 'react';
 import { View, StyleSheet } from 'react-native';
 import Svg, { Path } from 'react-native-svg';
+import { colors } from '@/constants/colors';
 
 interface CribbageBoardProps {
   player1Points: number;
@@ -66,6 +67,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
   const player1Progress = calculateProgress(player1Points, true);
   const player2Progress = calculateProgress(player2Points, false);
 
+  // @ts-ignore
   return (
     <View style={styles.container}>
       <View style={styles.boardContainer}>
@@ -83,7 +85,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
           {player1Progress > 0 && (
             <Path
               d={player1TrackPath}
-              stroke="#89CE00"
+              stroke={colors.brand.green}
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
@@ -94,7 +96,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
           {player2Progress > 0 && (
             <Path
               d={player2TrackPath}
-              stroke="#0073E6"
+              stroke={colors.brand.blue}
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
