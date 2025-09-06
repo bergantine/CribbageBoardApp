@@ -1,9 +1,10 @@
 import { View } from 'react-native';
-import CribbageBoard from '@/components/CribbageBoard';
 import { Stack } from 'expo-router';
-import AddButton from '@/components/AddButton';
 import { useState } from 'react';
 import { useIOSShakeToUndo } from '@/utils';
+import AddButton from '@/components/AddButton';
+import CribbageBoard from '@/components/CribbageBoard';
+import TotalScore from '@/components/TotalScore';
 import TurnScore from '@/components/TurnScore';
 
 export default function HomeScreen() {
@@ -113,7 +114,9 @@ export default function HomeScreen() {
           longPressFunction={() => addPointsToBoard({ player: 1, points: 5 })}
         />
         {lastPointsAddedForPlayer === 1 && <TurnScore player={1} points={player1TurnPoints} />}
+        <TotalScore player={1} points={player1Points} />
         <CribbageBoard player1Points={player1Points} player2Points={player2Points} width={30} />
+        <TotalScore player={2} points={player2Points} />
         {lastPointsAddedForPlayer === 2 && <TurnScore player={2} points={player2TurnPoints} />}
         <AddButton
           player={2}

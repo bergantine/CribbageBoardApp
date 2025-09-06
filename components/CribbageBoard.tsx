@@ -10,7 +10,7 @@ interface CribbageBoardProps {
 }
 
 const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoardProps) => {
-  const aspectRatio = 382 / 52; // height/width
+  const aspectRatio = 388 / 56; // height/width
   const height = width * aspectRatio;
 
   // outside track
@@ -74,19 +74,19 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
         <Svg
           width={width}
           height={height}
-          viewBox="0 0 52 382"
+          viewBox="-2 -2 56 386"
           preserveAspectRatio="xMidYMid meet"
           style={styles.svg}>
           {/* Background tracks (dark grey) */}
-          <Path d={player1TrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
-          <Path d={player2TrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
+          <Path d={player1TrackPath} stroke={colors.surface.subtle} strokeWidth="1" fill="none" />
+          <Path d={player2TrackPath} stroke={colors.surface.subtle} strokeWidth="1" fill="none" />
 
           {/* Progress tracks (colored) */}
           {player1Progress > 0 && (
             <Path
               d={player1TrackPath}
               stroke={colors.brand.green}
-              strokeWidth="2"
+              strokeWidth="4"
               fill="none"
               strokeLinecap="round"
               strokeDasharray={`${player1Progress} ${dashLength}`}
@@ -97,7 +97,7 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
             <Path
               d={player2TrackPath}
               stroke={colors.brand.blue}
-              strokeWidth="2"
+              strokeWidth="4"
               fill="none"
               strokeLinecap="round"
               strokeDasharray={`${player2Progress} ${dashLength}`}
