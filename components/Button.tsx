@@ -11,8 +11,8 @@ export default function Button({ player, pressFunction, longPressFunction }: But
   return (
     <TouchableOpacity
       className={cn(
-        'm-2 rounded-lg px-5 py-3',
-        player === 1 ? 'rotate-180 self-start bg-brand-green' : 'self-end bg-brand-blue'
+        'm-2 px-5 py-3 bg-surface-lowContrast w-[160px] h-[160px] rounded-full flex items-center justify-center',
+        player === 1 ? 'rotate-180 self-start' : 'self-end'
       )}
       onPress={() => {
         pressFunction();
@@ -20,7 +20,13 @@ export default function Button({ player, pressFunction, longPressFunction }: But
       onLongPress={() => {
         longPressFunction();
       }}>
-      <Text className="text-center text-base font-bold text-white">Player {player}</Text>
+      <Text
+        className={cn(
+          'text-center text-7xl font-bold',
+          player === 1 ? 'text-brand-green' : 'text-brand-blue'
+        )}>
+        +
+      </Text>
     </TouchableOpacity>
   );
 }
