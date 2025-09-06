@@ -18,11 +18,12 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
   const player1Progress = Math.max(0, Math.min(1, player1Points / maxPoints));
   const player2Progress = Math.max(0, Math.min(1, player2Points / maxPoints));
 
+  // outside track
   const player1TrackPath =
-    'M11 381V26C11 17.7157 17.7157 11 26 11V11C34.2843 11 41 17.6297 41 25.914C41 131.362 41 332.447 41 366.151C41 368.912 38.7614 371 36 371V371C33.2386 371 31 368.883 31 366.122C31 331.91 31 126.43 31 27';
-
-  const player2TrackPath =
     'M1 381V26C1 12.1929 12.1929 1 26 1V1C39.8071 1 51 12.1565 51 25.9637C51 132.082 51 313.33 51 366.149C51 374.433 44.2843 381 36 381V381C27.7157 381 21 374.37 21 366.085C21 312.132 21 125.111 21 26.5';
+  // inside track
+  const player2TrackPath =
+    'M11 381V26C11 17.7157 17.7157 11 26 11V11C34.2843 11 41 17.6297 41 25.914C41 131.362 41 332.447 41 366.151C41 368.912 38.7614 371 36 371V371C33.2386 371 31 368.883 31 366.122C31 331.91 31 126.43 31 27';
 
   const player1ScaleFactor = 70.2 / 121;
   const player2ScaleFactor = 66.4 / 121;
@@ -42,25 +43,25 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
           <Path d={player2TrackPath} stroke="#cfcfcf" strokeWidth="1" fill="none" />
 
           {/* Progress tracks (colored) */}
-          {player2Progress > 0 && (
-            <Path
-              d={player1TrackPath}
-              stroke="#0073E6"
-              strokeWidth="2"
-              fill="none"
-              strokeLinecap="round"
-              strokeDasharray={`${dashLength * player2Progress * player2ScaleFactor} ${dashLength}`}
-              strokeDashoffset="0"
-            />
-          )}
           {player1Progress > 0 && (
             <Path
-              d={player2TrackPath}
+              d={player1TrackPath}
               stroke="#89CE00"
               strokeWidth="2"
               fill="none"
               strokeLinecap="round"
               strokeDasharray={`${dashLength * player1Progress * player1ScaleFactor} ${dashLength}`}
+              strokeDashoffset="0"
+            />
+          )}
+          {player2Progress > 0 && (
+            <Path
+              d={player2TrackPath}
+              stroke="#0073E6"
+              strokeWidth="2"
+              fill="none"
+              strokeLinecap="round"
+              strokeDasharray={`${dashLength * player2Progress * player2ScaleFactor} ${dashLength}`}
               strokeDashoffset="0"
             />
           )}
