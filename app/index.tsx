@@ -6,8 +6,8 @@ import { useState } from 'react';
 import { useIOSShakeToUndo } from '@/utils';
 
 export default function HomeScreen() {
-  const [player1Points, setPlayer1Points] = useState(39);
-  const [player2Points, setPlayer2Points] = useState(39);
+  const [player1Points, setPlayer1Points] = useState(0);
+  const [player2Points, setPlayer2Points] = useState(0);
   const [lastPointsAdded, setLastPointsAdded] = useState(0);
   const [lastPointsAddedForPlayer, setLastPointsAddedForPlayer] = useState(0);
 
