@@ -25,8 +25,8 @@ const CribbageBoard = ({ player1Points, player2Points, width = 52 }: CribbageBoa
   const player2TrackPath =
     'M11 381V26C11 17.7157 17.7157 11 26 11V11C34.2843 11 41 17.6297 41 25.914C41 131.362 41 332.447 41 366.151C41 368.912 38.7614 371 36 371V371C33.2386 371 31 368.883 31 366.122C31 331.91 31 126.43 31 27';
 
-  const player1ScaleFactor = 70.2 / 121;
-  const player2ScaleFactor = 66.4 / 121;
+  const player1ScaleFactor = 70.1 / 120;
+  const player2ScaleFactor = 66.3 / 120;
   const dashLength = 2000;
 
   return (
